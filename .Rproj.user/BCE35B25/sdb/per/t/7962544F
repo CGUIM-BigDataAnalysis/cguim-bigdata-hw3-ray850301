@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "## PTT 爬蟲練習\nlibrary(rvest)\n## 放入網址\npttPKM<-\"https://www.ptt.cc/bbs/PokemonGo/index.html\"\npttContent<-read_html(pttPKM)\n\npost_title <- pttContent %>% html_nodes(\".title\") %>% html_text()\n\n## 列出爬出的第1~20筆資料\npost_title[1:20]\n",
+    "created" : 1490021964759.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3891917013",
+    "id" : "7962544F",
+    "lastKnownWriteTime" : 1490195827,
+    "last_content_update" : 1490195827279,
+    "path" : "D:/Program Files/BigData_R_Hw/Course/C_0320_2.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

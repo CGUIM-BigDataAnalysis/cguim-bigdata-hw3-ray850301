@@ -3,67 +3,67 @@ title: "長庚大學 大數據分析方法 作業三"
 output: github_document
 ---
 
-## 作業說明 （繳交時請直接刪除這個章節）
-
-作業目的：練習初級爬蟲，並將爬蟲結果整理成資料框data.frame
-
-依下列指示，完成網站內文分析：
-
-- 爬取指定網站內容
-    - 學號結尾 0,4,8:[Ptt Tech_Job 版](https://www.ptt.cc/bbs/Tech_Job/index.html)
-    - 學號結尾 1,5,9:[Ptt NBA 版](https://www.ptt.cc/bbs/NBA/index.html)
-    - 學號結尾 2,6:[Ptt LoL 版](https://www.ptt.cc/bbs/LoL/index.html)
-    - 學號結尾 3,7:[Ptt movie 版](https://www.ptt.cc/bbs/movie/index.html)
-    
-- 試著爬出**至少100篇**文章（`30pt`）的**標題**、**推文數**與**作者ID**（各`10pt`）
-    - 資料框欄位名稱：
-        - **標題**：Title
-        - **推文數**：PushNum
-        - **作者ID**：Author
-    - 一頁只有20篇，該怎麼辦？
-        - 提示：使用for + rbind()將分批爬取出的資料結合
-        - 範例：dataframeAll<-rbind(dataframe1,dataframe2) 
-        - 參考：[6.6 資料組合](http://yijutseng.github.io/DataScienceRBook/manipulation.html#section-6.6)
-    
-- 將爬取出的資料輸出至Markdown報告中（`10pt`）
-    - 使用knitr::kable(資料框物件)整理輸出
-    
-- 用文字搭配程式碼解釋爬蟲結果 
-    - 共爬出幾篇文章標題？（程式碼與文字解釋各`5pt`）
-        - dim(), nrow(), str()皆可
-    - 哪個作者文章數最多？（程式碼與文字解釋各`5pt`）
-        - table()
-    - 其他爬蟲結果解釋（`10pt`）
-        - 試著找出有趣的現象，不一定要用程式碼搭配解釋，也可只用文字
-
-    
-
 ## 網站資料爬取
 ```{r}
 #這是R Code Chunk
-library(rvest) ##第一次使用要先安裝 install.packages("rvest")
-##read_html
-##html_nodes
-##html_text
+##第一次使用要先安裝
+##install.packages("rvest")
+
+library(rvest)
+
+data=NULL
+for(n in 1:5){
+    ##目前NBA版最新頁數之index值為4606 (最新一頁不足20筆，所以我從再前一頁開始)
+    i=4606-n
+    pttNBA<-paste("https://www.ptt.cc/bbs/NBA/index",i,".html",sep="")
+    pttContent<-read_html(pttNBA ,encoding="UTF-8")
+
+    title <- pttContent %>% html_nodes(".title") %>% html_text()
+    push <- pttContent %>% html_nodes(".nrec")  %>% html_text()
+    aut <- pttContent %>% html_nodes(".author") %>% html_text()
+    
+    ##一頁共20筆資料，一共爬5頁分別裝在5個資料表，所以20*5=100筆
+    if(n==1){
+        data1=data.frame(Title=title,PushNum=push,Author=aut)
+    }else if(n==2){
+        data2=data.frame(Title=title,PushNum=push,Author=aut)
+    }else if(n==3){
+        data3=data.frame(Title=title,PushNum=push,Author=aut)
+    }else if(n==4){
+        data4=data.frame(Title=title,PushNum=push,Author=aut)
+    }else {
+        data5=data.frame(Title=title,PushNum=push,Author=aut)
+    }
+}
+
+##5合1
+data = rbind(data1, data2, data3, data4, data5)
+##直接試印100則
+print(data)
 ```
 
 ## 爬蟲結果呈現
 ```{r}
 #這是R Code Chunk
-knitr::kable(iris) ##請將iris取代為上個步驟中產生的爬蟲資料資料框
+##印出100則
+knitr::kable(data[1:100,c("Title","PushNum","Author")]) ##請將iris取代為上個步驟中產生的爬蟲資料資料框
 ```
 
 ## 解釋爬蟲結果 
 ```{r}
 #這是R Code Chunk
-```
+nrow(data)
 
-解釋解釋解釋解釋
+```
+nrow() 用來算列數，得到100列，所以可以知道包含被刪掉的標題共爬出100篇文章
 
 ```{r}
 #這是R Code Chunk
+table(data$Author)
+
 ```
+可以看到table中，有個作者叫Rambo
+一共發了17則推文，是裡面發文數最多的人
 
-解釋解釋解釋解釋
-
-人工結論與解釋解釋解釋解釋解釋解釋解釋
+心得:
+我覺得NBA的文章都挺無聊的，可能因為我本身不太FOLLOW籃球，隨意點了幾則推文數爆的進去看，發現大家只是在閒聊或是分享看比賽心得，而且通常那些文章都是新聞或是LIVE的影片分享，對我來說，還是八卦版之類的版有趣一點

@@ -1,0 +1,35 @@
+"0","install.packages(""rvest"")
+"
+"2","trying URL 'https://cran.rstudio.com/bin/windows/contrib/3.3/rvest_0.3.2.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 853345 bytes (833 KB)
+"
+"2","downloaded 833 KB
+
+"
+"1","package â€˜rvestâ€™ successfully unpacked and MD5 sums checked
+"
+"1","
+"
+"1","The downloaded binary packages are in
+	C:\Users\Ray\AppData\Local\Temp\RtmpI7DXfZ\downloaded_packages"
+"1","
+"
+"2","Warning message:
+"
+"2","In strsplit(code, ""\n"", fixed = TRUE) :"
+"2","
+ "
+"2"," input string 1 is invalid in this locale
+"
+"0","library(rvest) "
+"2","package ¡¥rvest¡¦ was built under R version 3.3.3"
+"2","Loading required package: xml2
+"
+"2","package ¡¥xml2¡¦ was built under R version 3.3.3"
+"0","pttNBA<-""https://www.ptt.cc/bbs/NBA/index.html"""
+"0","pttContent<-read_html(pttNBA)"
+"0","Title <- pttContent %>% html_nodes("".title"") %>% html_text()"
+"0","PushNum<-pttContent %>% html_nodes("".nrec"")  %>% html_text()"
+"0","Author<- pttContent %>% html_nodes("".author"") %>% html_text()"

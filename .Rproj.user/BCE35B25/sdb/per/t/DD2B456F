@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "---\ntitle: \"長庚大學 大數據分析方法 作業三\"\noutput: github_document\n---\n\n## 網站資料爬取\n```{r}\n#這是R Code Chunk\n##第一次使用要先安裝\n##install.packages(\"rvest\")\n\nlibrary(rvest)\n\ndata=NULL\nfor(n in 1:5){\n    ##目前NBA版最新頁數之index值為4606 (最新一頁不足20筆，所以我從再前一頁開始)\n    i=4606-n\n    pttNBA<-paste(\"https://www.ptt.cc/bbs/NBA/index\",i,\".html\",sep=\"\")\n    pttContent<-read_html(pttNBA ,encoding=\"UTF-8\")\n\n    title <- pttContent %>% html_nodes(\".title\") %>% html_text()\n    push <- pttContent %>% html_nodes(\".nrec\")  %>% html_text()\n    aut <- pttContent %>% html_nodes(\".author\") %>% html_text()\n    \n    ##一頁共20筆資料，一共爬5頁分別裝在5個資料表，所以20*5=100筆\n    if(n==1){\n        data1=data.frame(Title=title,PushNum=push,Author=aut)\n    }else if(n==2){\n        data2=data.frame(Title=title,PushNum=push,Author=aut)\n    }else if(n==3){\n        data3=data.frame(Title=title,PushNum=push,Author=aut)\n    }else if(n==4){\n        data4=data.frame(Title=title,PushNum=push,Author=aut)\n    }else {\n        data5=data.frame(Title=title,PushNum=push,Author=aut)\n    }\n}\n\n##5合1\ndata = rbind(data1, data2, data3, data4, data5)\n##直接試印100則\nprint(data)\n```\n\n## 爬蟲結果呈現\n```{r}\n#這是R Code Chunk\n##印出100則\nknitr::kable(data[1:100,c(\"Title\",\"PushNum\",\"Author\")]) ##請將iris取代為上個步驟中產生的爬蟲資料資料框\n```\n\n## 解釋爬蟲結果 \n```{r}\n#這是R Code Chunk\nnrow(data)\n\n```\nnrow() 用來算列數，得到100列，所以可以知道包含被刪掉的標題共爬出100篇文章\n\n```{r}\n#這是R Code Chunk\ntable(data$Author)\n\n```\n可以看到table中，有個作者叫Rambo\n一共發了17則推文，是裡面發文數最多的人\n\n心得:\n我覺得NBA的文章都挺無聊的，可能因為我本身不太FOLLOW籃球，隨意點了幾則推文數爆的進去看，發現大家只是在閒聊或是分享看比賽心得，而且通常那些文章都是新聞或是LIVE的影片分享，對我來說，還是八卦版之類的版有趣一點\n",
+    "created" : 1490018881736.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "496617194",
+    "id" : "DD2B456F",
+    "lastKnownWriteTime" : 1490205163,
+    "last_content_update" : 1490205163271,
+    "path" : "D:/Program Files/BigData_R_Hw/cguim-bigdata-hw3-ray850301/README.Rmd",
+    "project_path" : "README.Rmd",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

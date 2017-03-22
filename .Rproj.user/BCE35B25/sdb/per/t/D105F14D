@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1490202780633.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "D105F14D",
+    "lastKnownWriteTime" : 3257078244840666209,
+    "last_content_update" : 1490202780633,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "A82639FA",
+        "caption" : "Times",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=Times&cache_key=A82639FA",
+        "displayedObservations" : 67,
+        "environment" : "",
+        "object" : "Times",
+        "preview" : 0,
+        "totalObservations" : 67,
+        "variables" : 2
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}
